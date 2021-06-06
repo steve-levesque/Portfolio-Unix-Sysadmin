@@ -53,4 +53,4 @@ Overview of subroutines (acts like functions), references, parameters, associati
 
 Mostly not needed to do effective scripts.
 
-![perl adv](/screenshots/perl_adv_associative_ref_array.jpg?raw=true "Result of script execution")
+![perl adv](/screenshots/perl_adv_associative_ref_array.png?raw=true "Result of script execution")
