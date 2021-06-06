@@ -1,0 +1,10 @@
+[Unit]
+Description=Run dotnet_simplestart.sh
+
+[Service]
+WorkingDirectory=/working_directory
+ExecStart=/working_directory/dotnet_simplestart.sh "website" "profile"
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+[Install]
+WantedBy=multi-user.target

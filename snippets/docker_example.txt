@@ -1,0 +1,57 @@
+FROM ubuntu:20.04
+
+########################################################
+# Remote debug and login
+########################################################
+
+# Block user interaction (otherwise it will halt progress)
+RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get -y install tzdata
+
+# gcc, git, etc.
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    apt-utils gcc g++ ssh cmake build-essential gdb gdbserver rsync git
+
+RUN mkdir /var/run/sshd
+RUN echo 'root:root' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+
+# 22 for ssh server. 7777 for gdb server.
+EXPOSE 22 7777
+
+RUN useradd -ms /bin/bash debugger
+RUN echo 'debugger:pwd' | chpasswd
+
+########################################################
+# Custom complementary rules
+########################################################
+
+# Run with C program directly
+RUN git clone "https://gitwebsite/example.git"
+COPY $turing "/example"
+WORKDIR /example
+RUN gcc -o app main.c
+ENTRYPOINT ["./app"]
+
+# Run with script check
+#COPY "docker_entry.sh" "/example"
+#WORKDIR /example
+#RUN sed -i 's/\r$//' docker_entry.sh  && \
+#        chmod +x docker_entry.sh
+#RUN gcc -o app main.c
+#ENTRYPOINT ["./docker_entry.sh"]
+
+# Run bash scripts
+#COPY "test.sh" "/"
+#RUN sed -i 's/\r$//' test.sh  && \
+#        chmod +x test.sh
+#ENTRYPOINT ["/test.sh"]
+
+########################################################
+
+CMD ["/usr/sbin/sshd", "-D"]
