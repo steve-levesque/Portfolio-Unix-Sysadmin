@@ -5,7 +5,7 @@ filename=$(basename $1)
 #echo $filename
 
 if test -f "$1"; then
-    ./turingapp $filename $2
+    ./app $filename $2
 else
     echo "$1 does not exist."
 fi
