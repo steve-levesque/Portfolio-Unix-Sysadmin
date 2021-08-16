@@ -14,6 +14,9 @@
 
 <!-- Description of the Project -->
 ## About
+
+![https://unsplash.com/photos/EUsVwEOsblE](https://user-images.githubusercontent.com/42849270/129582548-c3ee121e-1e60-47d1-a259-5773fee578e6.jpg)
+
 ### Snippets
 
 #### Docker
@@ -103,7 +106,7 @@ See the `LICENSE` file at the root of the project directory for more information
 <!-- Acknowlegements and Sources -->
 ## Acknowlegements and Sources
 - Daniel Ouimet
-
+- https://unsplash.com/photos/EUsVwEOsblE
 
 
 <!-- md links & imgs -->
